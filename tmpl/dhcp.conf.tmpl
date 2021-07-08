@@ -1,0 +1,11 @@
+shared-network {network} {{
+    subnet {subnet} netmask {netmask}  {{
+        pool {{
+            range {first}  {last};
+        }}
+        option routers {gateway};
+        option subnet-mask {netmask};
+        default-lease-time 600;
+        max-lease-time 7200;
+    }}
+}}
