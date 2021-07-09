@@ -2,7 +2,7 @@ import ipaddress
 import sys
 import os
 sys.path.append(os.path.abspath("."))
-from utils import getTmpl
+from utils import getTmpl, Execmd
 
 def setupDHCPService(networkName:str, dhcpSubnet: str,dhcpGateway: str):
     ips = ipaddress.IPv4Network(dhcpSubnet)
@@ -14,4 +14,18 @@ def setupDHCPService(networkName:str, dhcpSubnet: str,dhcpGateway: str):
     dhcpConfig = getTmpl("dhcp.conf.tmpl").format(network=networkName,subnet=ipfrist, first=iplast, last=iplast,gateway=dhcpGateway,netmask=mask)
     return  dhcpConfig
 
-print(setupDHCPService('netowrk1','10.0.0.0/24','10.0.0.100'))
+def getUplinkInfo(networkInterface:str):
+    '''
+
+    :param nicName: network interface name
+    :return:
+    '''
+    Execmd("ethtool {intf}".format(intf=networkInterface)).get(raiseError=True)
+    cmd = "timeout 60 tcpdump -nnnve -c 1 -i {intf}  ether proto 0x88cc 2>/dev/null".format(intf=networkInterface)
+    return Execmd(cmd).get()
+
+def getOsType():
+    os = Execmd(
+        "cat /etc/os-release | grep ID | grep -v VERSION | awk -F= '{print $2}' | sed 'N;s/\"//g;s/\\n/ /g'").get()
+    osset = set(os.split(' '))
+    return osset
