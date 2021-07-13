@@ -27,7 +27,7 @@ def getUplinkInfo(networkInterface:str):
 
 def getOsType():
     os = Execmd(
-        "cat /etc/os-release | grep ID | grep -v VERSION | awk -F= '{print $2}' | sed 'N;s/\"//g;s/\\n/ /g'").get()
+        "cat /etc/os-release | egrep '^ID|ID_LIKE' | awk -F= '{print $2}' | sed 'N;s/\"//g;s/\\n/ /g'").get()
     osset = set(os.split(' '))
     return osset
 
