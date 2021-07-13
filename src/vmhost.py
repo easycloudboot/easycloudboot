@@ -71,5 +71,5 @@ class KvmHost(VmHost):
         '''
         if networkType == VMHostNetwork.Bridge:
             ip,itf = getDefaultIp()
-            Execmd("brctl create vmbridge && brctl addif vmbridge %s && ip addr add  %s dev vmbridge " % (itf, ip))
-
+            ret = Execmd("brctl create vmbridge && brctl addif vmbridge %s && ip addr add  %s dev vmbridge " % (itf, ip)).fire()
+            return ret

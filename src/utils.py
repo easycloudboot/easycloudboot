@@ -23,7 +23,7 @@ class Execmd(object):
         return stdout.decode(encoding='utf-8').strip()
 
     def fire(self):
-        os.system(self.cmd)
+        return os.system(self.cmd)
 
     def asyncFire(self):
         p = Process(target=self.fire)
