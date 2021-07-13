@@ -34,6 +34,6 @@ def getOsType():
 def getDefaultIp():
     cmd = "ip a s | grep inet | grep -v '127.0.0.1' | head -1 | awk '{print $2,$NF}'"
     ipinfo =  Execmd(cmd).get(raiseError=True)
-    if not ipinfo.strip():
+    if ipinfo.strip():
         return ipinfo.split(" ")
     raise Exception("ip address not found")
