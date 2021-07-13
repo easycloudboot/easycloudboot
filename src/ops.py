@@ -1,7 +1,8 @@
 import ipaddress
 import sys
 import os
-sys.path.append(os.path.abspath("."))
+sys.path.append(os.path.abspath(os.path.abspath(__file__) + "/../"))
+
 from utils import getTmpl, Execmd
 
 def setupDHCPService(networkName:str, dhcpSubnet: str,dhcpGateway: str):
