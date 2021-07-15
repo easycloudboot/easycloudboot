@@ -4,7 +4,7 @@ from enum import Enum
 
 import os,sys
 sys.path.append(os.path.abspath("."))
-from utils import  Execmd,getDefaultIp
+from utils import  Execmd, getDefaultIp
 
 class VMHostNetwork(Enum):
     Bridge=1

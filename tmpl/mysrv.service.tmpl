@@ -1,0 +1,15 @@
+[Unit]
+Description={Descrption}
+Documentation={Doc}
+After={After}
+
+[Service]
+Type={Type}
+ExecStart={Cmd}
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target
