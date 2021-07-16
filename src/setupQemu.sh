@@ -1,3 +1,5 @@
+yum install -y pixman pixman-devel zlib zlib-devel
+
 wget https://download.qemu.org/qemu-6.0.0.tar.xz
 mkdir -p ~/qemu
 tar xvJf qemu-6.0.0.tar.xz -C ~/qemu
