@@ -1,7 +1,7 @@
-from src.ops import setupCustomStartupService,LinuxServiceType
-from src.utils import getDefaultIp
+from src.linuxops.centos.ops import setupCustomStartupService,LinuxServiceType
+from src.linuxops.centos.utils import getDefaultIp
 from unittest import TestCase
-from unittest import mock
+
 
 class TestOps(TestCase):
     def setUp(self):
