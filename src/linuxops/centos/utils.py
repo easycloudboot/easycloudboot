@@ -16,9 +16,13 @@ def getOsType():
     osset = set(os.split(' '))
     return osset
 
-def getDefaultIp():
+def getDefaultIpv4():
     cmd = "ip a s | grep inet |grep -v inet6| grep -v '127.0.0.1' | head -1 | awk '{print $2,$NF}'"
     ipinfo =  Execmd(cmd).get(raiseError=True)
     if ipinfo.strip():
         return ipinfo.split(" ")
     raise Exception("ip address not found")
+
+def isDiskSupportDisacrd():
+    cmd = " cat /sys/block/{device}/queue/discard_granularity"
+    return Execmd(cmd).get() != "0"

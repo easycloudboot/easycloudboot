@@ -4,7 +4,7 @@ from enum import Enum
 import os,sys
 sys.path.append(os.path.abspath("../.."))
 from src.commonutils import  Execmd
-from src.linuxops.centos.utils import getDefaultIp
+from src.linuxops.centos.utils import getDefaultIpv4
 
 class VMHostNetwork(Enum):
     Bridge=1
@@ -81,6 +81,6 @@ class KvmHost(VmHost):
         :return:
         '''
         if networkType == VMHostNetwork.Bridge:
-            ip,itf = getDefaultIp()
+            ip,itf = getDefaultIpv4()
             ret = Execmd("brctl create vmbridge && brctl addif vmbridge %s && ip addr add  %s dev vmbridge " % (itf, ip)).fire()
             return ret

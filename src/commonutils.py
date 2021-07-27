@@ -15,11 +15,16 @@ def getTmpl(name):
         return tmplFile.read()
 
 class Execmd(object):
-    def __init__(self,cmd : str):
+    def __init__(self,cmd : str,stdin=None):
         self.cmd = cmd
+        if stdin:
+            self.stdin = stdin
 
     def get(self,raiseError=True) -> str:
-        p = Popen(self.cmd, shell=True, stdout= PIPE, stderr = PIPE)
+        if self.stdin:
+            p = Popen(self.cmd, shell=True, stdout= PIPE, stderr =PIPE, stdin= self.stdin)
+        else:
+            p = Popen(self.cmd, shell=True, stdout=PIPE, stderr=PIPE )
         stdout, stderr = p.communicate(timeout=2)
 
         if stderr and raiseError:
