@@ -35,7 +35,7 @@ def setupLibvirtYum():
 
 
 def setUpLibvirtLogging():
-    Execmd("virt-admin daemon-log-filters \"1:util 1:libvirt 1:storage 1:network 1:nodedev 1:qemu\"").get()
+    Execmd("virt-admin daemon-log-filters \"3:util 3:libvirt 3:storage 3:network 3:nodedev 3:qemu\"").get()
     Execmd("virt-admin daemon-log-outputs \"1:file:/var/log/libvirt/libvirtd.log\"").get()
 
 
