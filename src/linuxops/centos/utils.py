@@ -26,3 +26,7 @@ def getDefaultIpv4():
 def isDiskSupportDisacrd():
     cmd = " cat /sys/block/{device}/queue/discard_granularity"
     return Execmd(cmd).get() != "0"
+
+def getInterfaceUplinkInfo(nic):
+    cmd = "timeout 60 tcpdump -nnnve -c 1 -i %s  ether proto 0x88cc" % nic
+    return Execmd(cmd).get()
