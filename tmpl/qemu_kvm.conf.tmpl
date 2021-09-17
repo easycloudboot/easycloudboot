@@ -1,0 +1,142 @@
+<domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+    <name>a34g13160.cloud.g14.amtest66</name>
+    <memory unit='KiB'>{{memory}}</memory>
+    <vcpu placement='static'>{{vcpu}}</vcpu>
+    <cpu mode='host-passthrough'>
+        <topology sockets='1' cores='{{ vcpu //2 }}' threads='2'/>
+        <model fallback='allow'/>
+    </cpu>
+    <os>
+        <type arch='x86_64'>hvm</type>
+        <boot dev='hd'/>
+    </os>
+
+    <qemu:commandline>
+        <qemu:arg value='-enable-kvm'/>
+    </qemu:commandline>
+
+        <qemu:commandline>
+            <qemu:arg value='-set'/>
+            <qemu:arg value='device.scsi0-0-0-4.rotation_rate=1'/>
+        </qemu:commandline>
+
+
+        <qemu:commandline>
+            <qemu:arg value='-set'/>
+            <qemu:arg value='device.scsi0-0-0-5.rotation_rate=1'/>
+        </qemu:commandline>
+
+
+    <features>
+        <acpi/>
+        <apic/>
+        <pae/>
+    </features>
+
+    <clock offset='localtime'>
+        <timer name='rtc' tickpolicy='catchup' track='guest'/>
+    </clock>
+
+    <on_poweroff>destroy</on_poweroff>
+    <on_reboot>restart</on_reboot>
+    <on_crash>destroy</on_crash>
+
+    <devices>
+        <emulator>/usr/local/bin/qemu-system-x86_64</emulator>
+
+    {% for disk in disks -%}
+        <disk type='file' device='disk'>
+            <driver name='qemu' type='qcow2' cache='writeback' discard='unmap' io='threads'/>
+            <source file='{{disk.file}}'/>
+            <target dev='{{disk.device}}' bus='scsi'/>
+            <address type='drive' controller='0' bus='0' target='0' unit='0'/>
+        </disk>
+     {% endfor -%}
+
+
+
+
+
+        <controller type='ide' index='0'>
+            <alias name='ide0'/>
+            <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
+        </controller>
+
+        <memballoon model='virtio'>
+            <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
+            <stats period = '10'/>
+        </memballoon>
+
+
+    <interface type='bridge'>
+        <mac address='{mac}'/>
+        <source bridge='docker0'/>
+        <alias name='eth0'/>
+        <driver name='vhost' queues='16'/>
+        <model type='virtio'/>
+    </interface>
+
+
+        <input type='tablet' bus='usb'/>
+        <input type='mouse' bus='ps2'/>
+        <video>
+           <model type='vga' vram='8192' heads='1'/>
+            <alias name='video0'/>
+        </video>
+
+        <graphics type='vnc' port='{vncport}' passwd='r0oT@ezcloud' listen='0.0.0.0' autoport='no' keymap='en-us'/>
+
+        <serial type='pty'>
+            <source path='/dev/pts/0'/>
+            <target port='0'/>
+            <alias name='serial0'/>
+        </serial>
+        <console type='pty'>
+            <target type='serial' port='0'/>
+        </console>
+        <controller type='scsi' model='virtio-scsi' index='0'>
+          <alias name='sata0'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
+        </controller>
+        <controller type='scsi' model='virtio-scsi' index='1'>
+          <alias name='sata1'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
+        </controller>
+        <controller type='scsi' model='virtio-scsi' index='2'>
+          <alias name='sata2'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x09' function='0x0'/>
+        </controller>
+        <controller type='scsi' model='virtio-scsi' index='3'>
+          <alias name='sata3'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x0a' function='0x0'/>
+        </controller>
+        <controller type='scsi' model='virtio-scsi' index='4'>
+          <alias name='sata4'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x0b' function='0x0'/>
+        </controller>
+        <controller type='scsi' model='virtio-scsi' index='5'>
+          <alias name='sata5'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x0c' function='0x0'/>
+        </controller>
+        <controller type='scsi' model='virtio-scsi' index='6'>
+          <alias name='sata6'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x0d' function='0x0'/>
+        </controller>
+        <controller type='scsi' model='virtio-scsi' index='7'>
+          <alias name='sata7'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x0e' function='0x0'/>
+        </controller>
+        <controller type='scsi' model='virtio-scsi' index='8'>
+          <alias name='sata8'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x0f' function='0x0'/>
+        </controller>
+        <controller type='scsi' model='virtio-scsi' index='9'>
+          <alias name='sata9'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x10' function='0x0'/>
+        </controller>
+        <controller type='scsi' model='virtio-scsi' index='10'>
+          <alias name='sata10'/>
+          <address type='pci' domain='0x0000' bus='0x00' slot='0x11' function='0x0'/>
+        </controller>
+    </devices>
+</domain>
