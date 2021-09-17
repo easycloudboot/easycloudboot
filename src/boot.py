@@ -11,7 +11,7 @@ class KvmBooter:
 
     #Todo: use cloud-init to inject other configurations
     def boot(self):
-        qemu_kvm_template = open(os.path.abspath(__file__ + "/../../../tmpl/qemu_kvm.conf.tmpl"), 'r').read()
+        qemu_kvm_template = open(os.path.abspath(__file__ + "/../../tmpl/qemu_kvm.conf.tmpl"), 'r').read()
         kvm_xml_template = Template(qemu_kvm_template).render(self.spec.toDict())
         with open("%s.xml" % self.id,"w") as define_xml:
             define_xml.write(kvm_xml_template)
