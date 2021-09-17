@@ -5,7 +5,7 @@ capabilities to setup a minimal IAAS infrastructure based on big cloud providers
 clusters. We believe Infrastructure As Code(IaC) will improve your business agility with cloud computing.
 
 The project is aiming to add following abilities: 
-1. widgets to setup various services and capabilities [status: doing]
+1. widgets to setup various services and capabilities [status: doing].      
   1.1 auto PXE os installation for kvm hosts
   1.2 auto provisioning of kvm hosts
   1.3 kvm hosts state management
