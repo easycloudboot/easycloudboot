@@ -30,3 +30,7 @@ def isDiskSupportDisacrd():
 def getInterfaceUplinkInfo(nic):
     cmd = "timeout 60 tcpdump -nnnve -c 1 -i %s  ether proto 0x88cc" % nic
     return Execmd(cmd).get()
+
+def getMostProcesses():
+    cmd = "ps -eLf |awk '{print $10}'|sort | uniq -c | sort -nr |head"
+    return Execmd(cmd).get()
