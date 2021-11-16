@@ -34,3 +34,7 @@ def getInterfaceUplinkInfo(nic):
 def getMostProcesses():
     cmd = "ps -eLf |awk '{print $10}'|sort | uniq -c | sort -nr |head"
     return Execmd(cmd).get()
+
+def setProcessQuotaOfProcess(pid: int , quota: str):
+    cmd = "prlimit --pid={} --nproc={}:{}".format(pid,quota,quota)
+    return Execmd(cmd).get()
