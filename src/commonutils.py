@@ -17,6 +17,7 @@ def getTmpl(name):
 class Execmd(object):
     def __init__(self,cmd : str,stdin=None):
         self.cmd = cmd
+        self.stdin = None
         if stdin:
             self.stdin = stdin
 

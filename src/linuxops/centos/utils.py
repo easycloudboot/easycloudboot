@@ -37,4 +37,6 @@ def getMostProcesses():
 
 def setProcessQuotaOfProcess(pid: int , quota: str):
     cmd = "prlimit --pid={} --nproc={}:{}".format(pid,quota,quota)
+    print(cmd)
     return Execmd(cmd).get()
+
